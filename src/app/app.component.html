@@ -1,24 +1,8 @@
 
-  <div id="wrapper">
+  <div>
 
-    <app-sidebar [claseToggle] = "cambioClase"  ></app-sidebar>
-    
-    <div id="content-wrapper" class="d-flex flex-column">
-      <div id="content">
+    <router-outlet></router-outlet>
 
-        <app-navbar (claseToggle) = "cambioClase = $event" ></app-navbar>
-        <div class="container-fluid">
-
-          AQUI IRA TODO EL CONTENIDO
-          
-
-        </div>
-        
-
-        
-        <!-- <app-footer></app-footer> -->
-      </div>
-    </div>
     
   </div>
-  <app-totop></app-totop>
+  <!-- <app-totop></app-totop> -->

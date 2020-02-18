@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './compartido/navbar/navbar.component';
 import { FooterComponent } from './compartido/footer/footer.component';
@@ -13,6 +13,9 @@ import { IngresoEgresoComponent } from './ingreso-egreso/ingreso-egreso.componen
 import { ArticulosComponent } from './ingreso-egreso/articulos/articulos.component';
 import { DetallesComponent } from './ingreso-egreso/detalles/detalles.component';
 import { TotopComponent } from './compartido/totop/totop.component';
+import { PrincipalComponent } from './ingreso-egreso/principal/principal.component';
+import { AdminComponent } from './ingreso-egreso/admin/admin.component';
+import { MovimientosComponent } from './ingreso-egreso/movimientos/movimientos.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { TotopComponent } from './compartido/totop/totop.component';
     IngresoEgresoComponent,
     ArticulosComponent,
     DetallesComponent,
-    TotopComponent
+    TotopComponent,
+    PrincipalComponent,
+    AdminComponent,
+    MovimientosComponent
   ],
   imports: [
     BrowserModule,
