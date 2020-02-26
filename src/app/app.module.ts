@@ -17,6 +17,9 @@ import { PrincipalComponent } from './ingreso-egreso/principal/principal.compone
 import { AdminComponent } from './ingreso-egreso/admin/admin.component';
 import { MovimientosComponent } from './ingreso-egreso/movimientos/movimientos.component';
 
+// servicio
+import { ServiciosService } from './compartido/servicios.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +41,7 @@ import { MovimientosComponent } from './ingreso-egreso/movimientos/movimientos.c
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [ServiciosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
