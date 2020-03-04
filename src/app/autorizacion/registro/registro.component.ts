@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AutorizacionService } from '../autorizacion.service';
 
 @Component({
   selector: 'app-registro',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistroComponent implements OnInit {
 
-  constructor() { }
+  constructor(public autorizacionService: AutorizacionService) { }
 
   ngOnInit() {
+  }
+  onSubmit(data: any) {
+
+    console.log(data);
+    this.autorizacionService.crearUsuario(data.nombre , data.correo , data.contrasena1);
+
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output ,} from '@angular/core';
+import { AutorizacionService } from '../../autorizacion/autorizacion.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,13 +18,13 @@ export class NavbarComponent implements OnInit {
   ClaseInvisible1 = true;
   ClaseInvisible2 = false;
 
-  constructor() { }
+  constructor(public autorizacionService: AutorizacionService) { }
 
   ngOnInit() {
   }
 
   cambiarVista1() {
-    console.log( this.ClaseInvisible1 + " numero 1");
+    console.log( this.ClaseInvisible1 + 'numero 1');
     this.claseToggle.emit(this.ClaseCambio1);
     this.ClaseInvisible1 = false;
     this.ClaseInvisible2 = true;
@@ -31,9 +32,15 @@ export class NavbarComponent implements OnInit {
 
   cambiarVista2() {
 
-    console.log( this.ClaseInvisible2 + " numero 2");
+    console.log( this.ClaseInvisible2 + 'numero 2');
     this.claseToggle.emit(this.ClaseCambio2);
     this.ClaseInvisible1 = true;
     this.ClaseInvisible2 = false;
+  }
+
+  logout() {
+
+    this.autorizacionService.logout();
+
   }
 }

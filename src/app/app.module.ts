@@ -1,6 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
+
+
+// firebase
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './compartido/navbar/navbar.component';
@@ -16,6 +25,8 @@ import { TotopComponent } from './compartido/totop/totop.component';
 import { PrincipalComponent } from './ingreso-egreso/principal/principal.component';
 import { AdminComponent } from './ingreso-egreso/admin/admin.component';
 import { MovimientosComponent } from './ingreso-egreso/movimientos/movimientos.component';
+
+
 
 // servicio
 import { ServiciosService } from './compartido/servicios.service';
@@ -39,7 +50,11 @@ import { ServiciosService } from './compartido/servicios.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [ServiciosService],
   bootstrap: [AppComponent]
