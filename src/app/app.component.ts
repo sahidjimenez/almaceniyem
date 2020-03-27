@@ -10,11 +10,11 @@ export class AppComponent implements OnInit {
 
 
   constructor (public autorizacionService: AutorizacionService) {
-
-
   }
-  ngOnInit(){
+
+  ngOnInit() {
     this.autorizacionService.initAuthListerner();
   }
+
 }
 

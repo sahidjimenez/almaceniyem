@@ -7,7 +7,6 @@
 
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-              
       <div class="row">
         <div class="pr-1">
           <a href="#" class="btn btn-primary btn-icon-split btn-sm" data-toggle="modal" data-target="#AgregarModal">
@@ -32,28 +31,45 @@
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Office</th>
-              <th>Age</th>
-              <th>Start date</th>
-              <th>Salary</th>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Categoria</th>
+              <th>Cantidad en Almacen</th>
+              <th>Esta activo</th>
+              <th>Borrar</th>
             </tr>
           </thead>
-          <tfoot>
+          <tr>
+            <td>Azucar</td>
+            <td>Lorem, ipsum dolor sit amet </td>
+            <td>categoria</td>
+            <td>50</td>
+            <td>activo</td>
+            <td>
+              <button class="btn btn-danger">
+                <span>
+                  <i class="fas fa-trash"></i>
+                </span>
+                Borrar
+              </button>
+            </td>
+          </tr>
+          <!-- <tfoot>
             <tr>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Office</th>
-              <th>Age</th>
-              <th>Start date</th>
-              <th>Salary</th>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Categoria</th>
+              <th>Cantidad en Almacen</th>
+              <th>Esta activo</th>
+              <th>Borrar</th>
             </tr>
-          </tfoot>
+          </tfoot> -->
           <tbody>
 
           </tbody>
         </table>
+
+        
       </div>
     </div>
   </div>
@@ -75,35 +91,137 @@
       <div class="modal-body">
 
 
-        <form class="user">
-          <div class="form-group row">
-            <div class="col-sm-6 mb-3 mb-sm-0">
-              <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name">
-            </div>
-            <div class="col-sm-6">
-              <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name">
-            </div>
-          </div>
-          <div class="form-group">
-            <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-6 mb-3 mb-sm-0">
-              <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-            </div>
-            <div class="col-sm-6">
-              <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
-            </div>
-          </div>
+        <form [formGroup]="productoForm" (ngSubmit)="guardar()" class="user">
           
+          
+          <div class="form-group row">
+            
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="text"
+                     class="form-control form-control-user" 
+                     formControlName="nombre" 
+                     placeholder="Nombre"
+                     name="nombre"
+                     >
+            </div>
+
+            <div class="col-sm-6">
+              <input type="number" 
+                     class="form-control form-control-user" 
+                     formControlName="barcode"  
+                     placeholder="Codigo de barras"
+                     name="barcode"
+                     >
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <input type="text" 
+                   class="form-control form-control-user" 
+                   formControlName="descripcion" 
+                   placeholder="Descripcion"
+                   name="descripcion"
+                   >
+          </div>
+
+          <div class="form-group row">
+
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="number" 
+                     class="form-control form-control-user"
+                     formControlName="precioCompra"  
+                     placeholder="Precio de compra"
+                     name="precioCompra">
+            </div>
+
+            <div class="col-sm-6">
+
+              <input type="number" 
+                     class="form-control form-control-user"
+                     formControlName="precioVenta"  
+                     placeholder="Precio de venta"
+                     name="precioVenta">
+
+            </div>
+
+          </div>
+
+          <div class="form-group row">
+
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <select  class="form-control"
+                       formControlName="presentacion" 
+                       >
+                     <option [ngValue]="null"  disabled>Tipo de presentación:</option>
+                     
+                     <option *ngFor="let presentaciones of presentacion">{{presentaciones}}</option>
+              </select>
+              
+            </div>
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <select  class="form-control"
+                       formControlName="unidad" 
+                       >
+                     <option [ngValue]="null"  disabled>Tipo de unidad:</option>
+                     
+                     <option *ngFor="let unidades of unidad">{{unidades}}</option>
+              </select>
+              
+            </div>
+            
+            
+
+          </div>
+          <div class="form-group row">
+
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <select  class="form-control "
+                       formControlName="categoria" 
+                       >
+                     <option [ngValue]="null"  disabled>Categoria:</option>
+                     
+                     <option *ngFor="let categorias of categoria">{{categorias}}</option>
+              </select>
+              
+            </div>
+            <div class="col-sm-6">
+              <input type="number" 
+                     class="form-control form-control-user" 
+                     formControlName="cantidad"  
+                     placeholder="cantidad"
+                     name="cantidad"
+                     >
+            </div>
+            
+
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="checkbox" formControlName="estaActivado">
+              ¿Desea activarlo?
+            </div>
+            
+
+            
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" (click)="regresarValores()"  >Limpiar</button>
+
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            
+            <button class="btn btn-secondary" type="submit"
+                     [disabled]="productoForm.invalid">
+                    
+                     Agregar
+                    
+                    </button>            
+          </div>
         </form>
 
 
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="#">Agregar</a>
-      </div>
+      
     </div>
   </div>
 </div>

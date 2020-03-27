@@ -51,8 +51,17 @@
                       <label class="custom-control-label" for="customCheck">Recuerdame</label>
                     </div>
                   </div>
-                  <button [disabled]="f.invalid" class="btn btn-primary btn-user btn-block">
+                  <button *ngIf="!cargando"
+                          [disabled]="f.invalid"
+                          class="btn btn-primary btn-user btn-block"
+                           >
                     Iniciar sesión
+                  </button>
+                  <button *ngIf="cargando" [disabled]="f.invalid" 
+                          class="btn btn-primary btn-user btn-block"
+                          >
+                          <i class="fa fa-spin fa-sync"></i>
+                    Cargando...
                   </button>
                   
                 </form>

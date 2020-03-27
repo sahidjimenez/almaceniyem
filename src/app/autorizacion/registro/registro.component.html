@@ -81,9 +81,18 @@
               </div>
  
 
-              <button [disabled]="f.invalid" class="btn btn-primary btn-user btn-block">
-                Registrarse
-              </button>
+                  <button *ngIf="!cargando"
+                          [disabled]="f.invalid"
+                          class="btn btn-primary btn-user btn-block"
+                           >
+                    Iniciar sesión
+                  </button>
+                  <button *ngIf="cargando" [disabled]="f.invalid" 
+                          class="btn btn-primary btn-user btn-block"
+                          >
+                          <i class="fa fa-spin fa-sync"></i>
+                    Creando cuenta...
+                  </button>
               <hr>
             </form>
               

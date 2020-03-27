@@ -2,7 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
-
+import { ReactiveFormsModule } from '@angular/forms';
+// NGRX
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { appReducers } from './app.reducer';
 
 // firebase
 import { AngularFireModule } from 'angularfire2';
@@ -28,8 +32,9 @@ import { MovimientosComponent } from './ingreso-egreso/movimientos/movimientos.c
 
 
 
-// servicio
+
 import { ServiciosService } from './compartido/servicios.service';
+
 
 @NgModule({
   declarations: [
@@ -52,9 +57,15 @@ import { ServiciosService } from './compartido/servicios.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    StoreModule.forRoot(appReducers),
+     StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    })
   ],
   providers: [ServiciosService],
   bootstrap: [AppComponent]

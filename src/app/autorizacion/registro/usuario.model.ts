@@ -2,13 +2,19 @@
 export class Usuario {
     public nombre: string;
     public email: string;
-    public uid: string;
+    public uid?: string;
 
 
-    constructor(nombre: string, email: string, uid: string ) {
+static fromFirebase({email, nombre, uid}) {
 
-        this.nombre = nombre;
+    return new Usuario(email, nombre, uid);
+}
+
+    constructor(email: string, nombre: string, uid: string ) {
+
+
         this.uid = uid;
+        this.nombre = nombre;
         this.email = email;
 
     }

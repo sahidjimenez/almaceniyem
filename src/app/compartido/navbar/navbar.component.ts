@@ -1,6 +1,10 @@
 import { Component, OnInit, EventEmitter, Output ,} from '@angular/core';
 import { AutorizacionService } from '../../autorizacion/autorizacion.service';
-
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { Usuario } from '../../autorizacion/registro/usuario.model';
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -17,10 +21,26 @@ export class NavbarComponent implements OnInit {
   ClaseCambio2 = '';
   ClaseInvisible1 = true;
   ClaseInvisible2 = false;
-
-  constructor(public autorizacionService: AutorizacionService) { }
+  nombreUsuario: string;
+  usersSubs: Subscription;
+  constructor(public autorizacionService: AutorizacionService,
+              private store: Store<AppState>) { }
 
   ngOnInit() {
+
+
+    this.usersSubs = this.store.select('user')
+
+    .pipe(
+      filter( auth => auth.user != null )
+    )
+    .subscribe( ({user}) => {
+      console.log( user );
+      this.store.select('user').subscribe( user => this.nombreUsuario = user.user.nombre);
+
+    });
+
+
   }
 
   cambiarVista1() {
