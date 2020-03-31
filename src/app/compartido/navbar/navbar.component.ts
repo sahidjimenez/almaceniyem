@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output ,} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy ,} from '@angular/core';
 import { AutorizacionService } from '../../autorizacion/autorizacion.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
 
   // <!--AGREGAR toggled -->
   @Output ()
@@ -21,12 +21,17 @@ export class NavbarComponent implements OnInit {
   ClaseCambio2 = '';
   ClaseInvisible1 = true;
   ClaseInvisible2 = false;
-  nombreUsuario: string;
+  nombreUsuario = '';
+  apellidoUsuario = '';
   usersSubs: Subscription;
+  nombreSubs: Subscription;
+  apellidoSubs: Subscription;
+
   constructor(public autorizacionService: AutorizacionService,
               private store: Store<AppState>) { }
 
   ngOnInit() {
+
 
 
     this.usersSubs = this.store.select('user')
@@ -35,11 +40,19 @@ export class NavbarComponent implements OnInit {
       filter( auth => auth.user != null )
     )
     .subscribe( ({user}) => {
-      console.log( user );
-      this.store.select('user').subscribe( user => this.nombreUsuario = user.user.nombre);
+
+      this.nombreSubs = this.store.select('user').subscribe( user => this.nombreUsuario = user.user.nombre);
+      this.apellidoSubs = this.store.select('user').subscribe( user => this.apellidoUsuario = user.user.apellidos);
 
     });
 
+
+  }
+  ngOnDestroy() {
+
+    this.nombreSubs.unsubscribe();
+    this.apellidoSubs.unsubscribe();
+    this.usersSubs.unsubscribe();
 
   }
 

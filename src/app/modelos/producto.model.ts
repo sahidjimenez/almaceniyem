@@ -8,7 +8,7 @@ constructor(
     public cantidad: string,
     public precioCompra: string,
     public precioVenta: string,
-    public presentracion: string,
+    public presentacion: string,
     public unidad: string,
     public user_uid: string,
     public categoria: string,

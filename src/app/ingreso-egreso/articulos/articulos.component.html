@@ -30,27 +30,37 @@
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
-            <tr>
+            <tr >
               <th>Nombre</th>
               <th>Descripcion</th>
+              <th>cantidad en el almacen</th>
+              <th>Precio de compra</th>
+              <th>Precio de venta</th>
+              <th>Tipo de presentacion</th>
               <th>Categoria</th>
-              <th>Cantidad en Almacen</th>
               <th>Esta activo</th>
-              <th>Borrar</th>
+              <th>Acciones</th>
             </tr>
           </thead>
-          <tr>
-            <td>Azucar</td>
-            <td>Lorem, ipsum dolor sit amet </td>
-            <td>categoria</td>
-            <td>50</td>
-            <td>activo</td>
-            <td>
-              <button class="btn btn-danger">
+          <tr *ngFor="let item of articulos">
+            <td>{{item.nombre}}</td>
+            <td>{{item.descripcion}}</td>
+            <td align="center">{{item.cantidad}}</td>
+            <td>{{item.precioVenta|currency}}</td>
+            <td>{{item.precioCompra|currency}}</td>
+            <td>{{item.presentacion}}</td>
+            <td>{{item.categoria}}</td>
+            <td>{{item.estaActivado}}</td>
+            <td >
+              <button class="btn btn-danger" (click)="borrar(item.uid)">
                 <span>
                   <i class="fas fa-trash"></i>
                 </span>
-                Borrar
+              </button>
+              <button class="btn btn-success" (click)="mandarvalores(item.uid)" data-toggle="modal" data-target="#editarModal">
+                <span>
+                  <i class="fas fa-edit"></i>
+                </span>
               </button>
             </td>
           </tr>
@@ -78,7 +88,7 @@
 
 </div>
 
-<!-- Modals -->
+<!-- Modals 1 Articulo  nuevo-->
 <div class="modal fade" id="AgregarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -212,6 +222,154 @@
             
             <button class="btn btn-secondary" type="submit"
                      [disabled]="productoForm.invalid">
+                    
+                     Agregar
+                    
+                    </button>            
+          </div>
+        </form>
+
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Modals 2 Articulo Editar -->
+<div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Articulo</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+        <form [formGroup]="productoFormEditar" (ngSubmit)="editar()" class="user">
+          
+          
+          <div class="form-group row">
+            
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="text"
+                     class="form-control form-control-user" 
+                     formControlName="nombreE" 
+                     placeholder="Nombre"
+                     name="nombreE"
+                     >
+            </div>
+
+            <div class="col-sm-6">
+              <input type="number" 
+                     class="form-control form-control-user" 
+                     formControlName="barcodeE"  
+                     placeholder="Codigo de barras"
+                     name="barcodeE"
+                     >
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <input type="text" 
+                   class="form-control form-control-user" 
+                   formControlName="descripcionE" 
+                   placeholder="Descripcion"
+                   name="descripcionE"
+                   >
+          </div>
+
+          <div class="form-group row">
+
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="number" 
+                     class="form-control form-control-user"
+                     formControlName="precioCompraE"  
+                     placeholder="Precio de compra"
+                     name="precioCompraE">
+            </div>
+
+            <div class="col-sm-6">
+
+              <input type="number" 
+                     class="form-control form-control-user"
+                     formControlName="precioVentaE"  
+                     placeholder="Precio de venta"
+                     name="precioVentaE">
+
+            </div>
+
+          </div>
+
+          <div class="form-group row">
+
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <select  class="form-control"
+                       formControlName="presentacionE" 
+                       >
+                     <option [ngValue]="null"  disabled>Tipo de presentación:</option>
+                     
+                     <option *ngFor="let presentaciones of presentacion">{{presentaciones}}</option>
+              </select>
+              
+            </div>
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <select  class="form-control"
+                       formControlName="unidadE" 
+                       >
+                     <option [ngValue]="null"  disabled>Tipo de unidad:</option>
+                     
+                     <option *ngFor="let unidades of unidad">{{unidades}}</option>
+              </select>
+              
+            </div>
+            
+            
+
+          </div>
+          <div class="form-group row">
+
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <select  class="form-control "
+                       formControlName="categoriaE" 
+                       >
+                     <option [ngValue]="null"  disabled>Categoria:</option>
+                     
+                     <option *ngFor="let categorias of categoria">{{categorias}}</option>
+              </select>
+              
+            </div>
+            <div class="col-sm-6">
+              <input type="number" 
+                     class="form-control form-control-user" 
+                     formControlName="cantidadE"  
+                     placeholder="cantidad"
+                     name="cantidadE"
+                     >
+            </div>
+            
+
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="checkbox" formControlName="estaActivadoE">
+              ¿Desea activarlo?
+            </div>
+            
+
+            
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" (click)="regresarValores()"  >Limpiar</button>
+
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            
+            <button class="btn btn-secondary" type="submit"
+                     >
                     
                      Agregar
                     

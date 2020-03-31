@@ -5,7 +5,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { filter } from 'rxjs/operators';
 import { auth } from 'firebase';
+
 import { Subscription } from 'rxjs';
+import *as articulosActions from '../ingreso-egreso/articulos.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +18,8 @@ export class DashboardComponent implements OnInit,OnDestroy {
 
   cambioClase: string;
   usersSubs: Subscription;
+  articulosSubs: Subscription;
+
   constructor(public servicios: ServiciosService,
               private articulosService: ArticulosService,
               private store: Store<AppState>) { }
@@ -28,19 +32,25 @@ export class DashboardComponent implements OnInit,OnDestroy {
 
 
     this.usersSubs = this.store.select('user')
-  
+
     .pipe(
       filter( auth => auth.user != null )
     )
     .subscribe( ({user}) => {
       console.log( user );
-      this.articulosService.articulosListener();
+      this.articulosSubs = this.articulosService.articulosListener()
+      .subscribe(ingresosEgresosFB => {
+        this.store.dispatch(articulosActions.setArticulos({items: ingresosEgresosFB }));
+      });
     });
 
   }
 
 
-ngOnDestroy() {
-  this.usersSubs.unsubscribe();
-}
+  ngOnDestroy() {
+    this.articulosSubs.unsubscribe();
+    this.usersSubs.unsubscribe();
+
+
+  }
 }

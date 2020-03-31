@@ -3,6 +3,7 @@ import 'firebase/firestore';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Articulo } from 'src/app/modelos/producto.model';
 import { AutorizacionService } from '../../autorizacion/autorizacion.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,7 @@ export class ArticulosService {
 // NO SE SI ESTA BIEN GUARDAR EL UID DEL USUARIO
 
   crearArticulos( articulo: Articulo) {
-    const uid = this.autorizacionService.user.uid;
-    const pruebaUIDUSUARIO = '5PAXt1zHiBW9zBoUQHvJATXFXfl1';
+
 
    // console.log(this.autorizacionService.user.uid);
 
@@ -32,13 +32,44 @@ export class ArticulosService {
 
   }
 
+  actualizarArticulo(articulo: Articulo) {
+    return this.firestore.collection('articulos')
+                .doc(articulo.uid)
+                .update({... articulo})
+                .then( (ref) => console.log('existo!', ref))
+                .catch(err => console.log(err));
+
+  }
+
+
   articulosListener() {
 
-    this.firestore.collection(`articulos`).snapshotChanges()
-    .subscribe(items => {
-      console.log(items);
-    })
+   return  this.firestore.collection(`articulos`)
+    .snapshotChanges()
+    .pipe(
+      map( snapshot => {
+        return snapshot.map( doc => {
 
+          const data: any = doc.payload.doc.data();
+          return ({
+
+            ... data,
+            uid: doc.payload.doc.id,
+
+          });
+        });
+      })
+    );
+
+  }
+  articulosListenerEditar(uidArticulo:string) {
+
+    return  this.firestore.collection(`articulos`).doc(`${ uidArticulo }`).valueChanges();
+
+   }
+
+  deleteArticulo(uid:string){
+    return this.firestore.collection('articulos').doc(`${uid}`).delete();
   }
 
 }

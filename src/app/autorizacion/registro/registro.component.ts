@@ -29,9 +29,9 @@ export class RegistroComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(data: any) {
-
+    console.log(data);
     this.store.dispatch(ui.isLoading());
-    this.autorizacionService.crearUsuario(data.nombre , data.correo , data.contrasena1);
+    this.autorizacionService.crearUsuario(data.nombre , data.correo, data.apellidos , data.contrasena1);
 
   }
 

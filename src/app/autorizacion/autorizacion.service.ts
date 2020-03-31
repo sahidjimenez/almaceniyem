@@ -14,6 +14,7 @@ import * as authAction from '../autorizacion/autorizacion.actions';
 import { Subscription } from 'rxjs';
 import {map} from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import * as articulosActions  from '../ingreso-egreso/articulos.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +54,7 @@ export class AutorizacionService implements OnDestroy {
 
                //console.log('llamar unset del user');
                this._user = null;
-
+                this.store.dispatch(articulosActions.unSetArticulos());
                this.store.dispatch(authAction.unSetUser());
              }
           });
@@ -62,7 +63,7 @@ export class AutorizacionService implements OnDestroy {
         ngOnDestroy(){
           this.userSubs.unsubscribe();
         }
-  crearUsuario( nombre: string , correo: string , contrasena: string) {
+  crearUsuario( nombre: string , correo: string ,apellido:string,  contrasena: string) {
 
     this.afAutorizacion.auth
         .createUserWithEmailAndPassword(correo, contrasena)
@@ -71,6 +72,7 @@ export class AutorizacionService implements OnDestroy {
           const usuario: Usuario = {
             uid: resp.user.uid,
             nombre: nombre,
+            apellidos: apellido,
             email: resp.user.email
           };
 
@@ -93,7 +95,7 @@ export class AutorizacionService implements OnDestroy {
 
         this.afAutorizacion.auth
         .signInWithEmailAndPassword( correo, contrasena )
-        .then(resp => {;
+        .then(resp => {
           this.store.dispatch(ui.stopLoading());
           this.router.navigate(['/']);
         })
