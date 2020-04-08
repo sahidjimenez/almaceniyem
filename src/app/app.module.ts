@@ -29,11 +29,13 @@ import { TotopComponent } from './compartido/totop/totop.component';
 import { PrincipalComponent } from './ingreso-egreso/principal/principal.component';
 import { AdminComponent } from './ingreso-egreso/admin/admin.component';
 import { MovimientosComponent } from './ingreso-egreso/movimientos/movimientos.component';
-
+import { SecundarioComponent } from './ingreso-egreso/secundario/secundario.component';
 
 
 
 import { ServiciosService } from './compartido/servicios.service';
+import { PrimarioComponent } from './ingreso-egreso/primario/primario.component';
+
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { ServiciosService } from './compartido/servicios.service';
     TotopComponent,
     PrincipalComponent,
     AdminComponent,
-    MovimientosComponent
+    MovimientosComponent,
+    SecundarioComponent,
+    PrimarioComponent
   ],
   imports: [
     BrowserModule,

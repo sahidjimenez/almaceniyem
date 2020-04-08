@@ -11,12 +11,13 @@ import { Subscription } from 'rxjs';
 
 
 
+
 @Component({
   selector: 'app-articulos',
   templateUrl: './articulos.component.html',
   styleUrls: ['./articulos.component.css']
 })
-export class ArticulosComponent implements OnInit ,OnDestroy{
+export class ArticulosComponent implements OnInit , OnDestroy{
 
 
   productoForm: FormGroup;
@@ -27,11 +28,13 @@ export class ArticulosComponent implements OnInit ,OnDestroy{
   fechaHora = new Date();
   uid: string;
   articulos: any;
+
   articuloSubs: Subscription;
+  articuloEditarSubs: Subscription;
   itemEditado: any;
 
-  numero:any;
-
+  uidRecuperado: any;
+  
   nombreE: string;
   barcodeE: string;
   descripcionE: string;
@@ -43,6 +46,11 @@ export class ArticulosComponent implements OnInit ,OnDestroy{
   categoriaE: string;
   estaActivadoE: string;
   fechaCreacionE: string;
+  uidE: string;
+
+
+
+
 
 
 
@@ -54,6 +62,12 @@ export class ArticulosComponent implements OnInit ,OnDestroy{
               ) { }
 
   ngOnInit() {
+
+     const algo = document.getElementById('editarModal');
+     //console.log(algo);
+
+
+
    this.articuloSubs = this.store.select('ingresosEgreso')
       .subscribe(articulos => {
       this.articulos = articulos.items;
@@ -75,26 +89,28 @@ export class ArticulosComponent implements OnInit ,OnDestroy{
       fechaCreacion: [ null],
       uid: [null]
     });
+
     this.productoFormEditar = this.fb.group({
-      nombreE: ['', Validators.required],
-      barcodeE: ['', Validators.required],
-      descripcionE: ['', Validators.required],
-      cantidadE: ['', Validators.required],
-      precioCompraE: ['', Validators.required],
-      precioVentaE: ['', Validators.required],
-      presentacionE: [null , Validators.required],
-      unidadE: [null, Validators.required],
-      user_uidE: [''],
-      categoriaE: [null, Validators.required],
-      estaActivadoE: [false, Validators.required],
-      fechaCreacionE: [ null],
-      uidE: [null]
+      nombre: ['', Validators.required],
+      barcode: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      cantidad: ['', Validators.required],
+      precioCompra: ['', Validators.required],
+      precioVenta: ['', Validators.required],
+      presentacion: [null , Validators.required],
+      unidad: [null, Validators.required],
+      user_uid: [''],
+      categoria: [null, Validators.required],
+      estaActivado: [false, Validators.required],
+      fechaCreacion: [ null],
+      uid: [null]
     });
 
-    
   }
+  
   ngOnDestroy() {
     this.articuloSubs.unsubscribe();
+    this.articuloEditarSubs.unsubscribe();
   }
 
   guardar() {
@@ -105,7 +121,7 @@ export class ArticulosComponent implements OnInit ,OnDestroy{
     this.productoForm.get('user_uid').setValue(usuario_uid);
     this.productoForm.get('fechaCreacion').setValue(this.fechaHora.toLocaleString('es-MX'));
 
-    //console.log( this.productoForm.value);
+    console.log( this.productoForm.value);
 
     const {
       nombre,
@@ -150,11 +166,72 @@ export class ArticulosComponent implements OnInit ,OnDestroy{
     .catch(err => Swal.fire('Error!', err , 'error'));
   }
 
-  mandarvalores(numero) {
+  editar() {
+   
+    if (this.productoFormEditar.invalid) { return; }
 
-   // console.log(numero);
+    //console.log( this.productoFormEditar.value);
 
-    this.articulosService.articulosListenerEditar(numero)
+    const usuario_uid = this.autorizacionService.user.uid;
+    this.uidE = this.uidRecuperado;
+    this.productoFormEditar.get('user_uid').setValue(usuario_uid);
+    this.productoFormEditar.get('fechaCreacion').setValue(this.fechaHora.toLocaleString('es-MX'));
+    this.productoFormEditar.get('uid').setValue(this.uidE);
+    const {
+      nombre,
+      barcode,
+      descripcion,
+      cantidad,
+      precioCompra,
+      precioVenta,
+      presentacion,
+      unidad,
+      user_uid,
+      categoria,
+      estaActivado,
+      fechaCreacion,
+      uid,
+
+    } = this.productoFormEditar.value;
+
+    const articulo = new Articulo (
+      nombre,
+      barcode,
+      descripcion,
+      cantidad,
+      precioCompra,
+      precioVenta,
+      presentacion,
+      unidad,
+      user_uid,
+      categoria,
+      estaActivado,
+      fechaCreacion,
+      uid
+      );
+      console.log(articulo);
+
+      this.articulosService.actualizarArticulo(articulo)
+        .then( () => {
+
+        // Estos dos funciones resetean el formulario
+        // this.productoFormEditar.reset();
+        // this.regresarValoresE();
+        Swal.fire('Registro creado!', descripcion , 'success');
+  
+      })
+      .catch(err => Swal.fire('Error!', err , 'error'));
+  }
+
+  mandarvalores(uidR) {
+
+
+    this.uidRecuperado = uidR;
+
+
+   // console.log(uidR);
+
+   this.articuloEditarSubs = this.articulosService.articulosListenerEditar(uidR)
       .subscribe(
       itemAeditar => {
 
@@ -172,19 +249,19 @@ export class ArticulosComponent implements OnInit ,OnDestroy{
       this.categoriaE = this.itemEditado.categoria;
       this.estaActivadoE = this.itemEditado.estaActivado;
 
+      this.productoFormEditar.get('nombre').setValue(this.nombreE);
+      this.productoFormEditar.get('barcode').setValue(this.barcodeE);
+      this.productoFormEditar.get('descripcion').setValue(this.descripcionE);
+      this.productoFormEditar.get('cantidad').setValue(this.cantidadE);
+      this.productoFormEditar.get('precioCompra').setValue(this.precioCompraE);
+      this.productoFormEditar.get('precioVenta').setValue(this.precioVentaE);
+      this.productoFormEditar.get('presentacion').setValue(this.presentacionE);
+      this.productoFormEditar.get('unidad').setValue(this.unidadE);
+      this.productoFormEditar.get('fechaCreacion').setValue(this.fechaHora.toLocaleString('es-MX'));
+      this.productoFormEditar.get('categoria').setValue(this.categoriaE);
+      this.productoFormEditar.get('estaActivado').setValue(this.estaActivadoE);
+      this.productoFormEditar.get('uid').setValue(this.uid);
 
-      this.productoFormEditar.get('nombreE').setValue(this.nombreE);
-      this.productoFormEditar.get('barcodeE').setValue(this.barcodeE);
-      this.productoFormEditar.get('descripcionE').setValue(this.descripcionE);
-      this.productoFormEditar.get('cantidadE').setValue(this.cantidadE);
-      this.productoFormEditar.get('precioCompraE').setValue(this.precioCompraE);
-      this.productoFormEditar.get('precioVentaE').setValue(this.precioVentaE);
-      this.productoFormEditar.get('presentacionE').setValue(this.presentacionE);
-      this.productoFormEditar.get('unidadE').setValue(this.unidadE);
-      this.productoFormEditar.get('fechaCreacionE').setValue(this.fechaHora.toLocaleString('es-MX'));
-      this.productoFormEditar.get('categoriaE').setValue(this.categoriaE);
-      this.productoFormEditar.get('estaActivadoE').setValue(this.estaActivadoE);
-      this.productoFormEditar.get('uidE').setValue(this.uid);
 
       }
 
@@ -192,13 +269,11 @@ export class ArticulosComponent implements OnInit ,OnDestroy{
 
   }
 
-  editar() {
-    console.log( this.productoFormEditar.value);
-
- 
-  }
 
   regresarValores() {
+   
+
+
 
     this.productoForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -217,6 +292,27 @@ export class ArticulosComponent implements OnInit ,OnDestroy{
     });
 
   }
+  regresarValoresE() {
+
+    this.productoFormEditar = this.fb.group({
+      nombre: ['', Validators.required],
+      barcode: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      cantidad: ['', Validators.required],
+      precioCompra: ['', Validators.required],
+      precioVenta: ['', Validators.required],
+      presentacion: [null , Validators.required],
+      unidad: [null, Validators.required],
+      user_uid: [''],
+      categoria: [null, Validators.required],
+      estaActivado: [false, Validators.required],
+      fechaCreacion: [ null],
+      uid: [null]
+    });
+
+  }
+
+  
   borrar(uid:string) {
     this.articulosService.deleteArticulo(uid)
     .then(() => Swal.fire('Borrado', 'Item borrado', 'success'))

@@ -1,0 +1,63 @@
+<div class="container-fluid pl-3">
+
+  <div class=" mr-0">
+
+    <div class="card border-secondary mt-3 mb-3 " >
+      
+      <div class="card-header bg-transparent border-secondary">
+
+        <form [formGroup]="buscarForm" (ngSubmit)="buscar()" class="form-inline">
+          
+          <div class="input-group">
+        
+            <select  class="form-control"
+                       formControlName="presentacion" 
+                       >
+                     <option [ngValue]="null"  disabled>Tipo de presentación:</option>
+                     
+                     <option *ngFor=""></option>
+              </select>
+                   
+            <button type="submit" >
+              <i class="fas fa-search"></i>
+           </button>
+        </div>
+
+        </form>
+        
+      </div>
+
+
+
+      <div class=" card-body text-secondary red ">
+        <ul class="pl-0">
+          
+          <li class=" ml-4">
+
+            <div class="row mt-2 ">
+              <div class=" mt-2 col-sm-5">
+                Nombre :
+              </div>
+              <div class="col">
+                <input class="form-control" maxlength="1"  id="ex1" type="number">
+              </div>
+            </div>
+          
+          </li>
+          
+          
+
+        </ul>
+       
+      </div>
+      <div class="card-footer bg-transparent border-secondary">Sumatoria:</div>
+    </div>
+
+   
+    
+
+  </div>
+  <!-- Page Heading -->
+  
+
+</div>

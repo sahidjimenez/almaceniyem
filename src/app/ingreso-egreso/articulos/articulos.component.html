@@ -9,11 +9,35 @@
     <div class="card-header py-3">
       <div class="row">
         <div class="pr-1">
-          <a href="#" class="btn btn-primary btn-icon-split btn-sm" data-toggle="modal" data-target="#AgregarModal">
+          <a href="#" class="btn btn-primary btn-icon-split btn-md" data-toggle="modal" data-target="#AgregarModal">
             <span class="icon text-white-50">
               <i class="fas fa-plus"></i>
             </span>
             <span class="text">Agregar</span>
+          </a>
+        </div>
+        <div class="pr-1 pt-1">
+          <a href="#" class="btn btn-secondary btn-icon-split btn-sm" data-toggle="modal" data-target="#presentacionModal">
+            <span class="icon text-white-50">
+              <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">Presentación</span>
+          </a>
+        </div>
+        <div class="pr-1 pt-1">
+          <a href="#" class="btn btn-secondary btn-icon-split btn-sm" data-toggle="modal" data-target="#unidadModal">
+            <span class="icon text-white-50">
+              <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">unidad</span>
+          </a>
+        </div>
+        <div class="pr-1 pt-1">
+          <a href="#" class="btn btn-secondary btn-icon-split btn-sm" data-toggle="modal" data-target="#categoriaModal">
+            <span class="icon text-white-50">
+              <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">Categoria</span>
           </a>
         </div>
         <!-- <div class="pr-1">
@@ -87,6 +111,7 @@
 
 
 </div>
+<!-- MODALS NUEVOS -->
 
 <!-- Modals 1 Articulo  nuevo-->
 <div class="modal fade" id="AgregarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -221,6 +246,7 @@
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             
             <button class="btn btn-secondary" type="submit"
+                    
                      [disabled]="productoForm.invalid">
                     
                      Agregar
@@ -236,8 +262,158 @@
   </div>
 </div>
 
-<!-- Modals 2 Articulo Editar -->
-<div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modals 2 Presentacion nuevo -->
+<div class="modal fade"  id="presentacionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar una presentacion</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="productoFormEditar" (ngSubmit)="editar()" class="user">
+                    
+          <div class="form-group row">
+            
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="text"
+                     class="form-control form-control-user" 
+                     formControlName="nombre" 
+                     placeholder="Nombre"
+                     name="nombre"
+                     >
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" (click)="regresarValoresE()"  >Limpiar</button>
+
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            
+            <button class="btn btn-secondary" type="submit" 
+
+            [disabled]="productoFormEditar.invalid">
+                    
+                     Agregar
+                    
+                    </button>            
+          </div>
+        </form>
+
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Modals 3 Unidad nuevo -->
+<div class="modal fade"  id="unidadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar una unidad</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="productoFormEditar" (ngSubmit)="editar()" class="user">
+                    
+          <div class="form-group row">
+            
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="text"
+                     class="form-control form-control-user" 
+                     formControlName="nombre" 
+                     placeholder="Nombre"
+                     name="nombre"
+                     >
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" (click)="regresarValoresE()"  >Limpiar</button>
+
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            
+            <button class="btn btn-secondary" type="submit" 
+
+            [disabled]="productoFormEditar.invalid">
+                    
+                     Agregar
+                    
+                    </button>            
+          </div>
+        </form>
+
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Modals 4 categoria nuevo -->
+<div class="modal fade"  id="categoriaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar una categoria</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body center">
+
+        <form [formGroup]="productoFormEditar" (ngSubmit)="editar()" class="user">
+                    
+          <div class="form-group row">
+            
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="text"
+                     class="form-control form-control-user" 
+                     formControlName="nombre" 
+                     placeholder="Nombre"
+                     name="nombre"
+                     >
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" (click)="regresarValoresE()"  >Limpiar</button>
+
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            
+            <button class="btn btn-secondary" type="submit" 
+
+            [disabled]="productoFormEditar.invalid">
+                    
+                     Agregar
+                    
+                    </button>            
+          </div>
+        </form>
+
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- MODALS EDITAR -->
+
+<!-- Modals 1 Articulo Editar -->
+<div class="modal fade"  id="editarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -257,18 +433,18 @@
             <div class="col-sm-6 mb-3 mb-sm-0">
               <input type="text"
                      class="form-control form-control-user" 
-                     formControlName="nombreE" 
+                     formControlName="nombre" 
                      placeholder="Nombre"
-                     name="nombreE"
+                     name="nombre"
                      >
             </div>
 
             <div class="col-sm-6">
               <input type="number" 
                      class="form-control form-control-user" 
-                     formControlName="barcodeE"  
+                     formControlName="barcode"  
                      placeholder="Codigo de barras"
-                     name="barcodeE"
+                     name="barcode"
                      >
             </div>
           </div>
@@ -277,9 +453,9 @@
           <div class="form-group">
             <input type="text" 
                    class="form-control form-control-user" 
-                   formControlName="descripcionE" 
+                   formControlName="descripcion" 
                    placeholder="Descripcion"
-                   name="descripcionE"
+                   name="descripcion"
                    >
           </div>
 
@@ -288,18 +464,18 @@
             <div class="col-sm-6 mb-3 mb-sm-0">
               <input type="number" 
                      class="form-control form-control-user"
-                     formControlName="precioCompraE"  
+                     formControlName="precioCompra"  
                      placeholder="Precio de compra"
-                     name="precioCompraE">
+                     name="precioCompra">
             </div>
 
             <div class="col-sm-6">
 
               <input type="number" 
                      class="form-control form-control-user"
-                     formControlName="precioVentaE"  
+                     formControlName="precioVenta"  
                      placeholder="Precio de venta"
-                     name="precioVentaE">
+                     name="precioVenta">
 
             </div>
 
@@ -309,7 +485,7 @@
 
             <div class="col-sm-6 mb-3 mb-sm-0">
               <select  class="form-control"
-                       formControlName="presentacionE" 
+                       formControlName="presentacion" 
                        >
                      <option [ngValue]="null"  disabled>Tipo de presentación:</option>
                      
@@ -319,7 +495,7 @@
             </div>
             <div class="col-sm-6 mb-3 mb-sm-0">
               <select  class="form-control"
-                       formControlName="unidadE" 
+                       formControlName="unidad" 
                        >
                      <option [ngValue]="null"  disabled>Tipo de unidad:</option>
                      
@@ -335,7 +511,7 @@
 
             <div class="col-sm-6 mb-3 mb-sm-0">
               <select  class="form-control "
-                       formControlName="categoriaE" 
+                       formControlName="categoria" 
                        >
                      <option [ngValue]="null"  disabled>Categoria:</option>
                      
@@ -346,9 +522,9 @@
             <div class="col-sm-6">
               <input type="number" 
                      class="form-control form-control-user" 
-                     formControlName="cantidadE"  
+                     formControlName="cantidad"  
                      placeholder="cantidad"
-                     name="cantidadE"
+                     name="cantidad"
                      >
             </div>
             
@@ -356,7 +532,7 @@
           </div>
           <div class="form-group row">
             <div class="col-sm-6 mb-3 mb-sm-0">
-              <input type="checkbox" formControlName="estaActivadoE">
+              <input type="checkbox" formControlName="estaActivado">
               ¿Desea activarlo?
             </div>
             
@@ -364,12 +540,13 @@
             
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" (click)="regresarValores()"  >Limpiar</button>
+            <button class="btn btn-secondary" type="button" (click)="regresarValoresE()"  >Limpiar</button>
 
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             
-            <button class="btn btn-secondary" type="submit"
-                     >
+            <button class="btn btn-secondary" type="submit" 
+
+            [disabled]="productoFormEditar.invalid">
                     
                      Agregar
                     
@@ -383,3 +560,5 @@
     </div>
   </div>
 </div>
+
+
