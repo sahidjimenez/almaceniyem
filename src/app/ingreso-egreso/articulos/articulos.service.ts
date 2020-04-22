@@ -67,6 +67,7 @@ export class ArticulosService {
     return  this.firestore.collection(`articulos`).doc(`${ uidArticulo }`).valueChanges();
 
    }
+ 
 
   deleteArticulo(uid:string){
     return this.firestore.collection('articulos').doc(`${uid}`).delete();

@@ -6,51 +6,78 @@
       
       <div class="card-header bg-transparent border-secondary">
 
-        <form [formGroup]="buscarForm" (ngSubmit)="buscar()" class="form-inline">
-          
-          <div class="input-group">
-        
-            <select  class="form-control"
-                       formControlName="presentacion" 
-                       >
-                     <option [ngValue]="null"  disabled>Tipo de presentación:</option>
-                     
-                     <option *ngFor=""></option>
-              </select>
-                   
-            <button type="submit" >
-              <i class="fas fa-search"></i>
-           </button>
-        </div>
+        <form class="pb-2">
 
+          <input class="form-control form-control-sm" type="text" name="buscar" id="buscar" placeholder="Buscar...">
+          
         </form>
+
+        <div class="list-group" id="list-tab" role="tablist">
+          <a *ngFor="let articulo of articulos" (click)="addItem(articulo.nombre,articulo.cantidad)"  class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home"> {{articulo.nombre}}</a>
+          <!-- (click)="mandar($event,articulo.nombre,articulo.uid,articulo.cantidad)" -->
+          <!-- (click)="addItem( )" -->
+        </div>
         
       </div>
 
-
+  
 
       <div class=" card-body text-secondary red ">
-        <ul class="pl-0">
-          
-          <li class=" ml-4">
+        <form class=" pb-1" [formGroup]="actividadForm" (ngSubmit)="guardar()">
 
-            <div class="row mt-2 ">
-              <div class=" mt-2 col-sm-5">
-                Nombre :
-              </div>
-              <div class="col">
-                <input class="form-control" maxlength="1"  id="ex1" type="number">
-              </div>
+          <div>
+
+            <input class="form-control form-control-sm" 
+                  type="text" 
+                  name="buscar"  
+                  placeholder="Nombre del movimiento"
+                  formControlName="nombre">
+          </div>
+          
+          <div formArrayName="articulos" class=" mt-2 mb-2">
+
+            <div *ngFor="let x of articuloListArray.controls; let i = index; ">
+
+              <div [formGroupName]="i"  class=" inline border border-secondary mt-2">
+
+                <div class="form-group">
+
+                  <input class="form-control"
+                        type="text" 
+                        name="" 
+                        formControlName="nombreArticulo"
+                        placeholder="nombre"
+                        value="x.nombre"
+                        >
+                
+               </div>
+
+                <div class="form-group ">
+
+                  <input class="form-control"
+                          type="text" 
+                          name="" 
+                          formControlName="cantidad"
+                          placeholder="cantidad"
+                          value="x.cantidad"
+                          >
+                        </div>      
+
+                </div>
             </div>
-          
-          </li>
-          
-          
+          </div>  
 
-        </ul>
-       
+        <button class="btn-sm btn-primary" type="submit">
+                    
+           Agregar
+                    
+         </button> 
+         
+         
+        </form>
       </div>
-      <div class="card-footer bg-transparent border-secondary">Sumatoria:</div>
+      
+
     </div>
 
    
@@ -59,5 +86,3 @@
   </div>
   <!-- Page Heading -->
   
-
-</div>

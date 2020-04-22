@@ -10,8 +10,6 @@ import { AppState } from 'src/app/app.reducer';
 import { Subscription } from 'rxjs';
 
 
-
-
 @Component({
   selector: 'app-articulos',
   templateUrl: './articulos.component.html',
@@ -34,7 +32,6 @@ export class ArticulosComponent implements OnInit , OnDestroy{
   itemEditado: any;
 
   uidRecuperado: any;
-  
   nombreE: string;
   barcodeE: string;
   descripcionE: string;
@@ -49,11 +46,6 @@ export class ArticulosComponent implements OnInit , OnDestroy{
   uidE: string;
 
 
-
-
-
-
-
   constructor(public fb: FormBuilder,
               private articulosService: ArticulosService,
               private autorizacionService: AutorizacionService,
@@ -63,14 +55,12 @@ export class ArticulosComponent implements OnInit , OnDestroy{
 
   ngOnInit() {
 
-     const algo = document.getElementById('editarModal');
-     //console.log(algo);
-
 
 
    this.articuloSubs = this.store.select('ingresosEgreso')
       .subscribe(articulos => {
       this.articulos = articulos.items;
+      console.log(this.articulos);
     });
 
 
@@ -107,7 +97,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
     });
 
   }
-  
+
   ngOnDestroy() {
     this.articuloSubs.unsubscribe();
     this.articuloEditarSubs.unsubscribe();
@@ -312,8 +302,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
 
   }
 
-  
-  borrar(uid:string) {
+  borrar(uid: string) {
     this.articulosService.deleteArticulo(uid)
     .then(() => Swal.fire('Borrado', 'Item borrado', 'success'))
     .catch( err => Swal.fire('Borrado', err, 'success'));
