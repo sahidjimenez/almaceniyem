@@ -20,6 +20,7 @@ export class PrimarioComponent implements OnInit {
   articuloSubs: Subscription;
   Default =  'escoger';
   items: FormArray;
+  nombreArticulo: string;
 
 
 
@@ -52,6 +53,7 @@ export class PrimarioComponent implements OnInit {
     this.actividadForm = this.fb.group({
       nombre: [ '' , Validators.required],
       user_uid: [''],
+      lugar: [null],
       articulos: this.fb.array([]),
     });
 
@@ -70,12 +72,13 @@ export class PrimarioComponent implements OnInit {
   }
 
 get articulosArray(): FormArray {
+
   return this.actividadForm.get('articulos') as FormArray;
 }
 
-  addItem(nombre: string, cantidad: number) {
+  addItem(nombre: string, cantidad: number, uid: string) {
 
-    console.log(nombre, cantidad);
+    console.log(nombre, cantidad,uid);
 
     this.items = this.actividadForm.get('articulos') as FormArray;
     this.items.push(this.createItem(nombre, cantidad));
@@ -87,6 +90,11 @@ get articulosArray(): FormArray {
     console.log( this.actividadForm.value);
   }
 
+
+  eliminarItem(id){
+    this.articuloListArray.removeAt(id);
+
+  }
 
 
 }
