@@ -8,6 +8,12 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3">
       <div class="row">
+        <div class="pr-1 pb-1">
+          <input class="form-control form-control-sm" [(ngModel)]="buscar" type="text" name="buscar" id="buscar" placeholder="Buscar...">
+        </div>
+      </div>
+      <div class="row">
+        
         <div class="pr-1">
           <a href="#" class="btn btn-primary btn-icon-split btn-md" data-toggle="modal" data-target="#AgregarModal">
             <span class="icon text-white-50">
@@ -66,7 +72,7 @@
               <th>Acciones</th>
             </tr>
           </thead>
-          <tr *ngFor="let item of articulos">
+          <tr *ngFor="let item of articulos|filter:buscar">
             <td>{{item.nombre}}</td>
             <td>{{item.descripcion}}</td>
             <td align="center">{{item.cantidad}}</td>
@@ -298,7 +304,7 @@
 
             [disabled]="productoFormEditar.invalid">
                     
-                     Agregar
+                     Modificar
                     
                     </button>            
           </div>

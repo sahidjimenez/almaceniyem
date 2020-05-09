@@ -36,7 +36,8 @@ import { SecundarioComponent } from './ingreso-egreso/secundario/secundario.comp
 import { ServiciosService } from './compartido/servicios.service';
 import { PrimarioComponent } from './ingreso-egreso/primario/primario.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -71,7 +72,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
-     BrowserAnimationsModule
+     BrowserAnimationsModule,
+     NgxPaginationModule,
+     Ng2SearchPipeModule
   ],
   providers: [ServiciosService],
   bootstrap: [AppComponent]

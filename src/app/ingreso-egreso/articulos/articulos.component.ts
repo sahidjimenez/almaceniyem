@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './articulos.component.html',
   styleUrls: ['./articulos.component.css']
 })
-export class ArticulosComponent implements OnInit , OnDestroy{
+export class ArticulosComponent implements OnInit , OnDestroy {
 
 
   productoForm: FormGroup;
@@ -42,8 +42,10 @@ export class ArticulosComponent implements OnInit , OnDestroy{
   unidadE: string;
   categoriaE: string;
   estaActivadoE: string;
+  mostrarE: string;
   fechaCreacionE: string;
   uidE: string;
+  buscar: '';
 
 
   constructor(public fb: FormBuilder,
@@ -60,7 +62,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
    this.articuloSubs = this.store.select('ingresosEgreso')
       .subscribe(articulos => {
       this.articulos = articulos.items;
-      console.log(this.articulos);
+      //console.log(this.articulos);
     });
 
 
@@ -76,6 +78,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
       user_uid: [''],
       categoria: [null, Validators.required],
       estaActivado: [false, Validators.required],
+      mostrar: [true, Validators.required],
       fechaCreacion: [ null],
       uid: [null]
     });
@@ -92,6 +95,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
       user_uid: [''],
       categoria: [null, Validators.required],
       estaActivado: [false, Validators.required],
+      mostrar: [true, Validators.required],
       fechaCreacion: [ null],
       uid: [null]
     });
@@ -110,7 +114,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
     const usuario_uid = this.autorizacionService.user.uid;
     this.productoForm.get('user_uid').setValue(usuario_uid);
     this.productoForm.get('fechaCreacion').setValue(this.fechaHora.toLocaleString('es-MX'));
-
+    this.productoForm.get('mostrar').setValue(true);
     console.log( this.productoForm.value);
 
     const {
@@ -125,6 +129,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
       user_uid,
       categoria,
       estaActivado,
+      mostrar,
       fechaCreacion,
       uid,
 
@@ -142,6 +147,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
       user_uid,
       categoria,
       estaActivado,
+      mostrar,
       fechaCreacion,
       uid
       );
@@ -157,7 +163,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
   }
 
   editar() {
-   
+
     if (this.productoFormEditar.invalid) { return; }
 
     //console.log( this.productoFormEditar.value);
@@ -179,6 +185,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
       user_uid,
       categoria,
       estaActivado,
+      mostrar,
       fechaCreacion,
       uid,
 
@@ -196,6 +203,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
       user_uid,
       categoria,
       estaActivado,
+      mostrar,
       fechaCreacion,
       uid
       );
@@ -213,19 +221,20 @@ export class ArticulosComponent implements OnInit , OnDestroy{
       .catch(err => Swal.fire('Error!', err , 'error'));
   }
 
-  mandarvalores(uidR) {
+  mandarvalores(uidR: string) {
 
 
     this.uidRecuperado = uidR;
 
 
-   // console.log(uidR);
+    console.log(uidR);
 
    this.articuloEditarSubs = this.articulosService.articulosListenerEditar(uidR)
       .subscribe(
       itemAeditar => {
         console.log(itemAeditar)
 
+      console.log(itemAeditar);
       this.itemEditado = itemAeditar;
     //  console.log(this.itemEditado.nombre);
 
@@ -239,6 +248,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
       this.unidadE = this.itemEditado.unidad;
       this.categoriaE = this.itemEditado.categoria;
       this.estaActivadoE = this.itemEditado.estaActivado;
+      this.mostrarE = this.itemEditado.mostrar;
 
       this.productoFormEditar.get('nombre').setValue(this.nombreE);
       this.productoFormEditar.get('barcode').setValue(this.barcodeE);
@@ -251,6 +261,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
       this.productoFormEditar.get('fechaCreacion').setValue(this.fechaHora.toLocaleString('es-MX'));
       this.productoFormEditar.get('categoria').setValue(this.categoriaE);
       this.productoFormEditar.get('estaActivado').setValue(this.estaActivadoE);
+      this.productoFormEditar.get('mostrar').setValue(this.mostrarE);
       this.productoFormEditar.get('uid').setValue(this.uid);
 
 
@@ -262,9 +273,6 @@ export class ArticulosComponent implements OnInit , OnDestroy{
 
 
   regresarValores() {
-   
-
-
 
     this.productoForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -278,6 +286,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
       user_uid: [''],
       categoria: [null, Validators.required],
       estaActivado: [false, Validators.required],
+      mostrar: [true, Validators.required],
       fechaCreacion: [ null],
       uid: [null]
     });
@@ -297,6 +306,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
       user_uid: [''],
       categoria: [null, Validators.required],
       estaActivado: [false, Validators.required],
+      mostrar: [false, Validators.required],
       fechaCreacion: [ null],
       uid: [null]
     });
