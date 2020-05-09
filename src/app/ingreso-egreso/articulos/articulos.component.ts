@@ -224,6 +224,7 @@ export class ArticulosComponent implements OnInit , OnDestroy{
    this.articuloEditarSubs = this.articulosService.articulosListenerEditar(uidR)
       .subscribe(
       itemAeditar => {
+        console.log(itemAeditar)
 
       this.itemEditado = itemAeditar;
     //  console.log(this.itemEditado.nombre);
