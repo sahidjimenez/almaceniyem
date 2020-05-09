@@ -13,6 +13,7 @@ constructor(
     public user_uid: string,
     public categoria: string,
     public estaActivado: string,
+    public mostrar: string,
     public fechaCreacion: string,
     public uid?: string,
 

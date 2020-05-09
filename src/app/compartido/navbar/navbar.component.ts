@@ -5,6 +5,7 @@ import { AppState } from 'src/app/app.reducer';
 import { Usuario } from '../../autorizacion/registro/usuario.model';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { NavbarService } from './navbar.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -27,10 +28,26 @@ export class NavbarComponent implements OnInit, OnDestroy {
   nombreSubs: Subscription;
   apellidoSubs: Subscription;
 
+  Notificaciones : any[] = [];
+
   constructor(public autorizacionService: AutorizacionService,
-              private store: Store<AppState>) { }
+              private store: Store<AppState>,
+              private navbarService:NavbarService) { }
 
   ngOnInit() {
+
+
+    // this.navbarService.mostrarNotificaciones()
+    // .subscribe( algo =>{
+    //   console.log(algo);
+    // })
+    
+    
+
+    this.navbarService.actividadesListener().subscribe(items => {
+      this.Notificaciones = items;
+      console.log(this.Notificaciones);
+    })
 
 
 

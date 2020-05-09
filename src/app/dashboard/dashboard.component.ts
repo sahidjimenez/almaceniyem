@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit,OnDestroy {
       filter( auth => auth.user != null )
     )
     .subscribe( ({user}) => {
-      console.log( user );
+   //   console.log( user );
       this.articulosSubs = this.articulosService.articulosListener()
       .subscribe(ingresosEgresosFB => {
         this.store.dispatch(articulosActions.setArticulos({items: ingresosEgresosFB }));

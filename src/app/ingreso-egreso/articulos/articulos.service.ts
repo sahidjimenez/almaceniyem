@@ -62,14 +62,15 @@ export class ArticulosService {
     );
 
   }
-  articulosListenerEditar(uidArticulo:string) {
+
+  articulosListenerEditar(uidArticulo: string) {
 
     return  this.firestore.collection(`articulos`).doc(`${ uidArticulo }`).valueChanges();
 
    }
- 
 
-  deleteArticulo(uid:string){
+
+  deleteArticulo(uid: string) {
     return this.firestore.collection('articulos').doc(`${uid}`).delete();
   }
 
